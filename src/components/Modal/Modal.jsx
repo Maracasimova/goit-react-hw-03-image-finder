@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback } from 'react';
+import style from './Modal.module.css';
 
 const Modal = ({ isOpen, onClose, imageUrl }) => {
+  console.log('isModalOpen:', isOpen);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
@@ -45,8 +47,8 @@ const Modal = ({ isOpen, onClose, imageUrl }) => {
   return (
     <>
       {isModalOpen && (
-        <div className="overlay" onClick={handleOverlayClick}>
-          <div className="modal">
+        <div className={style.overlay} onClick={handleOverlayClick}>
+          <div className={style.modal}>
             <img src={imageUrl} alt="" />
           </div>
         </div>
