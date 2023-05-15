@@ -2,7 +2,6 @@ import { useState, useEffect, useCallback } from 'react';
 import style from './Modal.module.css';
 
 const Modal = ({ isOpen, onClose, imageUrl }) => {
-  console.log('isModalOpen:', isOpen);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
