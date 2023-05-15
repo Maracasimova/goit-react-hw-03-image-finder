@@ -79,13 +79,11 @@ class App extends Component {
         <Searchbar onSubmit={this.onChangeQuery} />
         <ImageGallery images={images} onImageClick={this.onImageClick} />
         {isLoading && <Loader />}
-        {shouldRenderLoadMoreButton && <Button onClick={this.fetchImages} />}
+        {shouldRenderLoadMoreButton && (
+          <Button onLoadMore={this.fetchImages} hasMore={true} />
+        )}
         {isModalOpen && (
-          <Modal
-            isOpen={isModalOpen}
-            onClose={this.toggleModal}
-            imageUrl={modalImageURL}
-          >
+          <Modal onClose={this.toggleModal} imageUrl={modalImageURL}>
             <img src={modalImageURL} alt="" />
           </Modal>
         )}

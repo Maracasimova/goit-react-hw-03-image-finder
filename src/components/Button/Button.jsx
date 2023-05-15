@@ -1,11 +1,22 @@
 import React from 'react';
+import style from './Button.module.css'
 
 const Button = ({ onLoadMore, hasMore }) => {
-  return hasMore ? (
-    <button type="button" onClick={onLoadMore} className="Button">
+  const handleClick = () => {
+    if (hasMore) {
+      onLoadMore();
+    }
+  };
+
+  if (!hasMore) {
+    return null;
+  }
+
+  return (
+    <button type="button" onClick={handleClick} className={style.Button}>
       Load more
     </button>
-  ) : null;
+  );
 };
 
 export default Button;
