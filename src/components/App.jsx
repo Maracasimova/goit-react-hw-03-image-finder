@@ -76,7 +76,7 @@ class App extends Component {
     return (
       <div>
         <Searchbar onSubmit={this.onChangeQuery} />
-        <ImageGallery images={images} onClick={this.onImageClick} />
+        <ImageGallery images={images} onImageClick={this.onImageClick} />
         {isLoading && <Loader />}
         {shouldRenderLoadMoreButton && <Button onClick={this.fetchImages} />}
         {isModalOpen && (
