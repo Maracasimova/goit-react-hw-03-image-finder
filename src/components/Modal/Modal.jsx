@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import style from './Modal.module.css';
+import PropTypes from 'prop-types';
 
 const Modal = ({ isOpen, onClose, imageUrl }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -54,6 +55,12 @@ const Modal = ({ isOpen, onClose, imageUrl }) => {
       )}
     </>
   );
+};
+
+Modal.propTypes = {
+  isOpen: PropTypes.bool.isRequired,
+  onClose: PropTypes.func.isRequired,
+  imageUrl: PropTypes.string.isRequired,
 };
 
 export default Modal;
