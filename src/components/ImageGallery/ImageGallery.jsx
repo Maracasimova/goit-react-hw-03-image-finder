@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ImageGalleryItem from '../ImageGalleryItem/ImageGalleryItem';
+import style from './ImageGallery.module.css'
 
 const ImageGallery = ({ images, onImageClick }) => (
-  <ul className="gallery">
+  <ul className={style.gallery}>
     {images.map(({ id, webformatURL, largeImageURL }) => (
       <ImageGalleryItem
         key={id}

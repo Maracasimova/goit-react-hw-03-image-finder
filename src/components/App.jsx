@@ -5,6 +5,7 @@ import Button from './Button/Button';
 import Loader from './Loader/Loader';
 import Modal from './Modal/Modal';
 import fetchImages from './pixabayAPI';
+import style from './App.module.css'
 
 class App extends Component {
   state = {
@@ -74,7 +75,7 @@ class App extends Component {
     const shouldRenderLoadMoreButton = images.length > 0 && !isLoading;
 
     return (
-      <div>
+      <div className={style.App}>
         <Searchbar onSubmit={this.onChangeQuery} />
         <ImageGallery images={images} onImageClick={this.onImageClick} />
         {isLoading && <Loader />}

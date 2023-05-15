@@ -1,12 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import style from './ImageGalleryItem.module.css'
 
 const ImageGalleryItem = ({ webformatURL, tags, onClick }) => (
-  <li className="ImageGalleryItem">
+  <li className={style.item}>
     <img
       src={webformatURL}
       alt={tags}
-      className="ImageGalleryItem-image"
+      className={style.itemImage}
       onClick={onClick}
     />
   </li>
