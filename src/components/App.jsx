@@ -47,7 +47,7 @@ class App extends Component {
         images: [],
       },
       () => {
-        this.fetchImages(); // Вызываем fetchImages() после обновления состояния
+        this.fetchImages();
       }
     );
   };
