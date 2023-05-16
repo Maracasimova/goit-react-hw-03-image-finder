@@ -5,7 +5,7 @@ import Button from './Button/Button';
 import Loader from './Loader/Loader';
 import Modal from './Modal/Modal';
 import fetchImages from './pixabayAPI';
-import style from './App.module.css'
+import style from './App.module.css';
 
 class App extends Component {
   state = {
@@ -18,7 +18,10 @@ class App extends Component {
   };
 
   componentDidUpdate(prevProps, prevState) {
-    if (prevState.searchQuery !== this.state.searchQuery) {
+    if (
+      prevState.searchQuery !== this.state.searchQuery &&
+      this.state.images.length > 0
+    ) {
       this.fetchImages();
     }
   }
@@ -37,11 +40,16 @@ class App extends Component {
   };
 
   onChangeQuery = searchQuery => {
-    this.setState({
-      searchQuery,
-      currentPage: 1,
-      images: [],
-    });
+    this.setState(
+      {
+        searchQuery,
+        currentPage: 1,
+        images: [],
+      },
+      () => {
+        this.fetchImages(); // Вызываем fetchImages() после обновления состояния
+      }
+    );
   };
 
   fetchImages = () => {
@@ -77,10 +85,13 @@ class App extends Component {
     return (
       <div className={style.App}>
         <Searchbar onSubmit={this.onChangeQuery} />
-        <ImageGallery images={images} onImageClick={this.onImageClick} />
+        {images.length > 0 && (
+          <ImageGallery images={images} onImageClick={this.onImageClick} />
+        )}
+
         {isLoading && <Loader />}
         {shouldRenderLoadMoreButton && (
-          <Button onLoadMore={this.fetchImages} hasMore={true} />
+          <Button onLoadMore={this.fetchImages} hasMore={!isLoading} />
         )}
         {isModalOpen && (
           <Modal
