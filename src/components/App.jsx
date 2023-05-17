@@ -63,10 +63,15 @@ class App extends Component {
 
     fetchImages(options)
       .then(images => {
-        this.setState(prevState => ({
-          images: [...prevState.images, ...images],
-          currentPage: prevState.currentPage + 1,
-        }));
+        this.setState(
+          prevState => ({
+            images: [...prevState.images, ...images],
+            currentPage: prevState.currentPage + 1,
+          }),
+          () => {
+            console.log('currentPage:', this.state.currentPage);
+          }
+        );
       })
       .catch(error => console.log(error))
       .finally(() => {
