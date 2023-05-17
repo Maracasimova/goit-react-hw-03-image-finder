@@ -1,61 +1,75 @@
-import { useState, useEffect, useCallback } from 'react';
+import React, { Component } from 'react';
 import style from './Modal.module.css';
 import PropTypes from 'prop-types';
 
-const Modal = ({ isOpen, onClose, imageUrl }) => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  useEffect(() => {
-    setIsModalOpen(isOpen);
-  }, [isOpen]);
-
-  const handleCloseModal = useCallback(() => {
-    setIsModalOpen(false);
-    onClose();
-  }, [onClose]);
-
-  const handleKeyDown = useCallback(
-    event => {
-      if (event.keyCode === 27) {
-        handleCloseModal();
-      }
-    },
-    [handleCloseModal]
-  );
-
-  useEffect(() => {
-    if (isModalOpen) {
-      document.addEventListener('keydown', handleKeyDown);
-    } else {
-      document.removeEventListener('keydown', handleKeyDown);
-    }
-
-    return () => {
-      document.removeEventListener('keydown', handleKeyDown);
+class Modal extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isModalOpen: false,
     };
-  }, [isModalOpen, handleKeyDown]);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
+    this.handleOverlayClick = this.handleOverlayClick.bind(this);
+  }
 
-  const handleOverlayClick = useCallback(
-    event => {
-      if (event.target === event.currentTarget) {
-        handleCloseModal();
+  componentDidMount() {
+    this.setIsModalOpen(this.props.isOpen);
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isOpen !== this.props.isOpen) {
+      this.setIsModalOpen(this.props.isOpen);
+    }
+  }
+
+  componentWillUnmount() {
+    document.removeEventListener('keydown', this.handleKeyDown);
+  }
+
+  setIsModalOpen(isOpen) {
+    this.setState({ isModalOpen: isOpen }, () => {
+      if (isOpen) {
+        document.addEventListener('keydown', this.handleKeyDown);
+      } else {
+        document.removeEventListener('keydown', this.handleKeyDown);
       }
-    },
-    [handleCloseModal]
-  );
+    });
+  }
 
-  return (
-    <>
-      {isModalOpen && (
-        <div className={style.overlay} onClick={handleOverlayClick}>
-          <div className={style.modal}>
-            <img src={imageUrl} alt="" />
+  handleCloseModal() {
+    this.setIsModalOpen(false);
+    this.props.onClose();
+  }
+
+  handleKeyDown(event) {
+    if (event.keyCode === 27) {
+      this.handleCloseModal();
+    }
+  }
+
+  handleOverlayClick(event) {
+    if (event.target === event.currentTarget) {
+      this.handleCloseModal();
+    }
+  }
+
+  render() {
+    const { isModalOpen } = this.state;
+    const { imageUrl } = this.props;
+
+    return (
+      <>
+        {isModalOpen && (
+          <div className={style.overlay} onClick={this.handleOverlayClick}>
+            <div className={style.modal}>
+              <img src={imageUrl} alt="" />
+            </div>
           </div>
-        </div>
-      )}
-    </>
-  );
-};
+        )}
+      </>
+    );
+  };
+}
 
 Modal.propTypes = {
   isOpen: PropTypes.bool.isRequired,
