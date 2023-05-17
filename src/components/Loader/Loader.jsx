@@ -1,30 +1,38 @@
-import React, { useState, useEffect } from 'react';
+import React, { Component } from 'react';
 import Loader from 'react-content-loader';
 
-const Spinner = () => {
-  const [isLoading, setIsLoading] = useState(true);
+class Spinner extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoading: true,
+    };
+  }
 
-  useEffect(() => {
+  componentDidMount() {
     setTimeout(() => {
-      setIsLoading(false);
+      this.setState({ isLoading: false });
     }, 5000);
-  }, []);
+  }
 
-  return (
-    <div className="spinner">
-      {isLoading ? (
-        <Loader
-          height={140}
-          speed={1}
-          backgroundColor={'#d6d2c7'}
-          foregroundColor={'#999'}
-          viewBox="0 0 380 70"
-        />
-      ) : (
-        <div></div>
-      )}
-    </div>
-  );
-};
+  render() {
+    const { isLoading } = this.state;
 
+    return (
+      <div className="spinner">
+        {isLoading ? (
+          <Loader
+            height={140}
+            speed={1}
+            backgroundColor={'#d6d2c7'}
+            foregroundColor={'#999'}
+            viewBox="0 0 380 70"
+          />
+        ) : (
+          <div></div>
+        )}
+      </div>
+    );
+  }
+}
 export default Spinner;
