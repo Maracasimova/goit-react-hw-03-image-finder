@@ -78,6 +78,17 @@ class App extends Component {
       });
   };
 
+  incrementPage() {
+    this.setState(
+      prevState => ({
+        page: prevState.page + 1,
+      }),
+      () => {
+        this.fetchImages();
+      }
+    );
+  }
+
   render() {
     const { images, isLoading, isModalOpen, modalImageURL } = this.state;
     const shouldRenderLoadMoreButton = images.length > 0 && !isLoading;
@@ -88,10 +99,9 @@ class App extends Component {
         {images.length > 0 && (
           <ImageGallery images={images} onImageClick={this.onImageClick} />
         )}
-
         {isLoading && <Loader />}
         {shouldRenderLoadMoreButton && (
-          <Button onLoadMore={this.fetchImages} hasMore={!isLoading} />
+          <Button onLoadMore={() => this.incrementPage()} hasMore={!isLoading} />
         )}
         {isModalOpen && (
           <Modal
