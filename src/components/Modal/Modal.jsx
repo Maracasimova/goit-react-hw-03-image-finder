@@ -3,7 +3,6 @@ import style from './Modal.module.css';
 import PropTypes from 'prop-types';
 
 class Modal extends Component {
-
   componentDidMount() {
     document.addEventListener('keydown', this.handleKeyDown);
   }
@@ -12,18 +11,8 @@ class Modal extends Component {
     document.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  setIsModalOpen = isOpen => {
-    this.setState({ isModalOpen: isOpen }, () => {
-      if (isOpen) {
-        document.addEventListener('keydown', this.handleKeyDown);
-      } else {
-        document.removeEventListener('keydown', this.handleKeyDown);
-      }
-    });
-  };
-
   handleCloseModal = () => {
-    this.setIsModalOpen(false);
+    this.setState({ isModalOpen: false });
     this.props.onClose();
   };
 
@@ -40,18 +29,15 @@ class Modal extends Component {
   };
 
   render() {
-    const { isModalOpen } = this.state;
     const { imageUrl } = this.props;
 
     return (
       <>
-        {isModalOpen && (
-          <div className={style.overlay} onClick={this.handleOverlayClick}>
-            <div className={style.modal}>
-              <img src={imageUrl} alt="" />
-            </div>
+        <div className={style.overlay} onClick={this.handleOverlayClick}>
+          <div className={style.modal}>
+            <img src={imageUrl} alt="" />
           </div>
-        )}
+        </div>
       </>
     );
   }
