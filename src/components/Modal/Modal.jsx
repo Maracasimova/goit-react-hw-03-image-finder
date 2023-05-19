@@ -21,7 +21,7 @@ class Modal extends Component {
     document.removeEventListener('keydown', this.handleKeyDown);
   }
 
-  setIsModalOpen(isOpen) {
+  setIsModalOpen = isOpen => {
     this.setState({ isModalOpen: isOpen }, () => {
       if (isOpen) {
         document.addEventListener('keydown', this.handleKeyDown);
@@ -29,24 +29,24 @@ class Modal extends Component {
         document.removeEventListener('keydown', this.handleKeyDown);
       }
     });
-  }
+  };
 
-  handleCloseModal() {
+  handleCloseModal = () => {
     this.setIsModalOpen(false);
     this.props.onClose();
-  }
+  };
 
-  handleKeyDown(event) {
+  handleKeyDown = event => {
     if (event.keyCode === 27) {
       this.handleCloseModal();
     }
-  }
+  };
 
-  handleOverlayClick(event) {
+  handleOverlayClick = event => {
     if (event.target === event.currentTarget) {
       this.handleCloseModal();
     }
-  }
+  };
 
   render() {
     const { isModalOpen } = this.state;
