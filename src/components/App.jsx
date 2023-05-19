@@ -15,12 +15,14 @@ class App extends Component {
     isLoading: false,
     isModalOpen: false,
     modalImageURL: '',
+    showBtn: false,
   };
+  
 
   componentDidUpdate(prevProps, prevState) {
     if (
-      prevState.searchQuery !== this.state.searchQuery &&
-      this.state.images.length > 0
+      prevState.searchQuery !== this.state.searchQuery ||
+      prevState.currentPage !== this.state.currentPage
     ) {
       this.fetchImages();
     }
@@ -40,16 +42,11 @@ class App extends Component {
   };
 
   onChangeQuery = searchQuery => {
-    this.setState(
-      {
-        searchQuery,
-        currentPage: 1,
-        images: [],
-      },
-      () => {
-        this.fetchImages();
-      }
-    );
+    this.setState({
+      searchQuery,
+      currentPage: 1,
+      images: [],
+    });
   };
 
   fetchImages = () => {
@@ -62,10 +59,10 @@ class App extends Component {
     this.setState({ isLoading: true });
 
     fetchImages(options)
-      .then(images => {
+      .then(data => {
         this.setState(prevState => ({
-          images: [...prevState.images, ...images],
-          currentPage: prevState.currentPage + 1,
+          images: [...prevState.images, ...data.hits],
+          showBtn: currentPage < Math.ceil(data.totalHits / 12),
         }));
       })
       .catch(error => console.log(error))
@@ -101,7 +98,10 @@ class App extends Component {
         )}
         {isLoading && <Loader />}
         {shouldRenderLoadMoreButton && (
-          <Button onLoadMore={() => this.incrementPage()} hasMore={!isLoading} />
+          <Button
+            onLoadMore={() => this.incrementPage()}
+            hasMore={!isLoading}
+          />
         )}
         {isModalOpen && (
           <Modal
