@@ -3,14 +3,9 @@ import style from './Modal.module.css';
 import PropTypes from 'prop-types';
 
 class Modal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      isModalOpen: false,
-    };
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.handleOverlayClick = this.handleOverlayClick.bind(this);
-  }
+  state = {
+    isModalOpen: false,
+  };
 
   componentDidMount() {
     this.setIsModalOpen(this.props.isOpen);
@@ -68,7 +63,7 @@ class Modal extends Component {
         )}
       </>
     );
-  };
+  }
 }
 
 Modal.propTypes = {
