@@ -80,15 +80,11 @@ class App extends Component {
       prevState => ({
         page: prevState.page + 1,
       }),
-      () => {
-        this.fetchImages();
-      }
     );
   }
 
   render() {
-    const { images, isLoading, isModalOpen, modalImageURL } = this.state;
-    const shouldRenderLoadMoreButton = images.length > 0 && !isLoading;
+    const { images, isLoading, isModalOpen, modalImageURL, showBtn } = this.state;
 
     return (
       <div className={style.App}>
@@ -97,7 +93,7 @@ class App extends Component {
           <ImageGallery images={images} onImageClick={this.onImageClick} />
         )}
         {isLoading && <Loader />}
-        {shouldRenderLoadMoreButton && (
+        {showBtn && (
           <Button
             onLoadMore={() => this.incrementPage()}
             hasMore={!isLoading}
