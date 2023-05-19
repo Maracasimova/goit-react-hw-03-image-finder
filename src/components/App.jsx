@@ -17,7 +17,6 @@ class App extends Component {
     modalImageURL: '',
     showBtn: false,
   };
-  
 
   componentDidUpdate(prevProps, prevState) {
     if (
@@ -76,15 +75,14 @@ class App extends Component {
   };
 
   incrementPage() {
-    this.setState(
-      prevState => ({
-        page: prevState.page + 1,
-      }),
-    );
+    this.setState(prevState => ({
+      currentPage: prevState.currentPage + 1,
+    }));
   }
 
   render() {
-    const { images, isLoading, isModalOpen, modalImageURL, showBtn } = this.state;
+    const { images, isLoading, isModalOpen, modalImageURL, showBtn } =
+      this.state;
 
     return (
       <div className={style.App}>
