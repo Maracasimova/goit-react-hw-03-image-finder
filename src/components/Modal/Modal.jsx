@@ -3,18 +3,9 @@ import style from './Modal.module.css';
 import PropTypes from 'prop-types';
 
 class Modal extends Component {
-  state = {
-    isModalOpen: false,
-  };
 
   componentDidMount() {
-    this.setIsModalOpen(this.props.isOpen);
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.isOpen !== this.props.isOpen) {
-      this.setIsModalOpen(this.props.isOpen);
-    }
+    document.addEventListener('keydown', this.handleKeyDown);
   }
 
   componentWillUnmount() {
