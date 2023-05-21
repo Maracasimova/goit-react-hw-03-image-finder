@@ -99,7 +99,7 @@ class App extends Component {
         )}
         {isModalOpen && (
           <Modal
-            isOpen={isModalOpen}
+            isModalOpen={isModalOpen}
             onClose={this.toggleModal}
             imageUrl={modalImageURL}
           >
