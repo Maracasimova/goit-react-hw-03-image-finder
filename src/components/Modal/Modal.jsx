@@ -39,7 +39,7 @@ class Modal extends Component {
 }
 
 Modal.propTypes = {
-  isOpen: PropTypes.bool.isRequired,
+  isModalOpen: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   imageUrl: PropTypes.string.isRequired,
 };
